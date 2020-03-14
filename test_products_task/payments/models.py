@@ -9,7 +9,7 @@ from model_utils.models import TimeStampedModel
 
 
 class Customer(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='customer')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, related_name='customer', on_delete=models.CASCADE)
     stripe_id = models.CharField(_('Stripe id'), max_length=50, blank=True)
 
     def __str__(self):
@@ -23,7 +23,7 @@ class Order(TimeStampedModel):
         ('failed', _('Failed')),
     )
 
-    customer = models.ForeignKey(Customer, related_name='orders')
+    customer = models.ForeignKey(Customer, related_name='orders', on_delete=models.CASCADE)
     amount = models.PositiveIntegerField(_('Amount'))
     status = models.CharField(_('Status'), max_length=15, choices=STATUSES, default=STATUSES.pending)
     address = models.CharField(max_length=255)

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+    <section class="category-area">
+        <div class="container">
+            <div class="row features-inner">
+                <div class="col-lg-12 text-center" style="height: 1000px">
+                    <div class="section-title">
+                    <hr>
+                        <h1>{{ cat.name }}</h1>
+                    <hr>
+                        <div class="row">
+                        {% for item in cat.products.all %}
+                            {% include 'products/one_small_product.html' with product=item %}
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

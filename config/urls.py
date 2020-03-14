@@ -8,15 +8,15 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
-from test_products_task.products.views import CategoryListView
+from test_products_task.products.views import MainView
 
 urlpatterns = [
-    url(r'^$', CategoryListView.as_view(), name="home"),
+    url(r'^$', MainView.as_view(), name="home"),
     # Django Admin, use {% url 'admin:index' %}
-    url(settings.ADMIN_URL, include(admin.site.urls)),
-    url(r'^products/', include("test_products_task.products.urls", namespace="products")),
-    url(r'^users/', include("test_products_task.users.urls", namespace="users")),
-    url(r'^payments/', include("test_products_task.payments.urls", namespace="payments")),
+    url(settings.ADMIN_URL, admin.site.urls),
+    url(r'^products/', include(("test_products_task.products.urls", 'products'), namespace='products')),
+    url(r'^users/', include(("test_products_task.users.urls", 'users'), namespace='users')),
+    url(r'^payments/', include(("test_products_task.payments.urls", 'payments'), namespace='payments')),
 ]
 
 

@@ -1,0 +1,20 @@
+{% load static %}
+<div class="col-lg-3 col-md-6">
+    <div class="single-product">
+        <img height="200px" width="200px" src="{% static product.prod_img %}" alt="">
+        <div class="product-details">
+            <h4><a style="color: black" href={% url 'products:product_detail' category_slug=cat.slug product_slug=product.slug %}>{{ product.name }}</a></h4>
+            <div class="price" style="display: inline-block">
+                <h3 style="margin-top: 3px">{{ product.price }} ₴</h3>
+            </div>
+            <form method="post" style="display: inline-block">
+                {% csrf_token %}
+                <input type="hidden" name="change_like" value="{{ product.slug }}">
+                <button type="submit" class="btn btn-link"">
+                    <span class="glyphicon glyphicon-heart" style="color: red; font-size: 20px"></span>
+                    <h4 style="display: inline-block; margin-left: 3px; color: black">{{ product.likes.count }}</h4>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,23 +1,50 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<h1>{{ product.name }}</h1>
-<h5>{{ product.price }}</h5>
-<h5>{{ product.description }}</h5>
-<h6>Likes {{ product.likes.count }}</h6>
-<ul class="list-group">
-    {% for date, count in likes.items %}
-        <li class="list-group-item">{{ date }} - {{ count }}</li>
-    {% endfor %}
-</ul>
 
-<h3>Popular</h3>
-<ul class="list-group">
-{% for product in popular_list %}
-    <li class="list-group-item">
-        <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-    </li>
-{% endfor %}
-</ul>
+    <img height="300px" width="300px" src="{% static product.prod_img %}" alt=""><br>
+    <h2 style="display: inline-block">{{ product.name }}</h2>
+    <form method="post" style="display: inline-block">
+    {% csrf_token %}
+        <input type="hidden" name="change_like" value="{{ product.slug }}">
+        <button type="submit" class="btn btn-link">
+            <span class="glyphicon glyphicon-heart" style="height: 10px; color: red; font-size: 20px"></span>
+            <h4 style="display: inline-block; margin-left: 3px; color: black">{{ product.likes.count }}</h4>
+        </button>
+    </form>
+    <h4>{{ product.price }} ₴</h4>
+    <h5>{{ product.description }}</h5>
+    <ul class="list-group" style="margin-top: 0px">
+        {% for date, count in likes.items %}
+            <li class="list-group-item">{{ date }} - {{ count }}</li>
+        {% endfor %}
+    </ul>
 
+    <h3>Popular</h3>
+    <ul class="list-group">
+        {% for product in popular_list %}
+            <li class="list-group-item">
+                <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h1>Comments</h1>
+    {% if product.prod_comments %}
+        {% for comment in product.prod_comments %}
+            <hr>
+            <h4>{{ comment.name }}</h4>
+            <p>{{ comment.text }}</p>
+            <hr>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <label>Name: <br><input type="text" name="username_comment"></label><br>
+        <label>Message: <br><textarea cols="35" rows="5" name="comment_message"></textarea></label><br>
+        <input type="hidden" name="add_comment" value="{{ product.slug }}">
+        <button type="submit">Leave a comment</button>
+    </form><br><br>
 {% endblock content %}

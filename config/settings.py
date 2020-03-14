@@ -4,7 +4,8 @@ from __future__ import absolute_import, unicode_literals
 
 import os
 import sys
-
+from dotenv import load_dotenv
+load_dotenv()
 import environ
 
 
@@ -13,15 +14,15 @@ APPS_DIR = ROOT_DIR.path('test_products_task')
 # sys.path.append(str(ROOT_DIR))
 
 env = environ.Env(
-    DJANGO_DEBUG=(bool, False),
-    DJANGO_SECRET_KEY=(str, 'CHANGEME!!!e8!1671ifpp362f9gbd3v@e($0_flznbb3fa2d4zg7zn@%yyk2'),
+    DJANGO_DEBUG=(bool, True),
+    DJANGO_SECRET_KEY=(str, os.getenv('DJANGO_SECRET_KEY')),
     DJANGO_ADMINS=(list, []),
     DJANGO_ALLOWED_HOSTS=(list, []),
-    DJANGO_STATIC_ROOT=(str, str(APPS_DIR('staticfiles'))),
+    DJANGO_STATIC_ROOT=(str, str(APPS_DIR('static'))),
     DJANGO_MEDIA_ROOT=(str, str(APPS_DIR('media'))),
-    DJANGO_DATABASE_URL=(str, 'postgres:///test_products_task'),
+    DJANGO_DATABASE_URL=(str, os.getenv('DJANGO_DATABASE_URL')),
     DJANGO_EMAIL_URL=(environ.Env.email_url_config, 'consolemail://'),
-    DJANGO_DEFAULT_FROM_EMAIL=(str, 'admin@example.com'),
+    DJANGO_DEFAULT_FROM_EMAIL=(str, os.getenv("DJANGO_DEFAULT_FROM_EMAIL")),
     DJANGO_SERVER_EMAIL=(str, 'root@localhost.com'),
     DJANGO_STRIPE_PUBLIC_KEY=(str, ''),
     DJANGO_STRIPE_SECRET_KEY=(str, ''),
@@ -31,6 +32,7 @@ env = environ.Env(
 
     DJANGO_HEALTH_CHECK_BODY=(str, 'Success'),
 )
+
 
 environ.Env.read_env(env_file=os.path.join(str(ROOT_DIR), '.env'))
 
@@ -88,7 +90,7 @@ LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -134,6 +136,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
+                'test_products_task.products.views.menu',
             ],
         },
     },

@@ -1,4 +1,4 @@
-{% load staticfiles i18n %}<!DOCTYPE html>
+{% load static %}<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -41,7 +41,11 @@
             {% else %}
             <li><a href="{% url 'users:login' %}">Login</a></li>
           {% endif %}
-
+            <li class="nav-item submenu dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">Categories</a>
+                {% include 'products/site_categories.html' with spisok=Category_0 %}
+            </li>
         </ul>
         </div>
       </div>

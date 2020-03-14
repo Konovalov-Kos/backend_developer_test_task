@@ -1,0 +1,5 @@
+<ul class="dropdown-menu">
+    {% for item in spisok %}
+    <li class="nav-item"><a class="nav-link" href="{% url 'products:category_detail' category_slug=item.slug %}">{{ item.name }}</a></li>
+    {% endfor %}
+</ul>
