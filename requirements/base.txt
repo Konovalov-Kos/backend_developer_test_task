@@ -2,7 +2,7 @@ Django==3.0.3
 django-braces==1.11.0
 django-environ==0.4.3
 django-model-utils==3.0.0
-Pillow==4.1.1
+Pillow==9.0.1
 psycopg2==2.7.1
 stripe==1.65.0
 python-dotenv
